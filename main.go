@@ -7,10 +7,7 @@ import (
 )
 
 func main() {
-	testArr := generateArr("243--2")
-	for i := 0; i < len(testArr); i++ {
-		fmt.Println(testArr[i])
-	}
+	evaluate("1111+11")
 }
 
 func evaluate(expression string) float64 {
@@ -25,17 +22,17 @@ func evaluate(expression string) float64 {
 
 	for strings.Contains(resultStr, " ") || strings.Contains(resultStr, "(") || strings.Contains(resultStr, ")") || strings.Contains(resultStr, "sin") || strings.Contains(resultStr, "cos") || strings.Contains(resultStr, "tan") {
 		levelInfo = checkHighestLevel(resultStr)
-		strA = resultStr
+		strA = subString(resultStr, 0, len(resultStr))
 		strB = calculateStr(levelInfo[0])
-		tmp1, _ := strconv.ParseInt(levelInfo[2], 10, 32)
-		if tmp1 == len(resultStr)-1 {
-			
+		if i := strconv.Atoi(levelInfo[2]); i == len(resultStr)-1 {
+			strC = ""
+		} else {
+		    strC = subString(resultStr, strconv.Atoi(levelInfo[2])+1, len(resultStr))
 		}
+		resultStr = strA + strB + strC
 	}
 
-	resultStr = strA + strB + strC
 	result, _ := strconv.ParseFloat(resultStr, 64)
-
 	return result
 }
 
@@ -186,4 +183,9 @@ func addArrIdx(inputArr []string, str string, idx int) []string {
 	resultTmp = append(inputArrTmp[:idx], str)
 	result = append(resultTmp, inputArr[idx:]...)
 	return result
+}
+
+func subString(inputStr string, beginIdx int, endIdx int) string {
+    result := inputStr[beginIdx:endIdx]
+    return result
 }
