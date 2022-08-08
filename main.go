@@ -27,9 +27,9 @@ func evaluate(expression string) float64 {
 		levelInfo = checkHighestLevel(resultStr)
 		strA = resultStr
 		strB = calculateStr(levelInfo[0])
-
-		if strconv.ParseInt(levelInfo[2], 10, 32) == len(resultStr)-1 {
-
+		tmp1, _ := strconv.ParseInt(levelInfo[2], 10, 32)
+		if tmp1 == len(resultStr)-1 {
+			
 		}
 	}
 
