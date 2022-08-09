@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	evaluate("1111+11")
+	fmt.Println(evaluate(`(1 + 2) + (5 * 3 / (72 - 23))`))
 }
 
 func evaluate(expression string) float64 {
@@ -18,18 +18,37 @@ func evaluate(expression string) float64 {
 		strB      string
 		strC      string
 	)
+	i := 0
 	resultStr = expression + " "
-
 	for strings.Contains(resultStr, " ") || strings.Contains(resultStr, "(") || strings.Contains(resultStr, ")") || strings.Contains(resultStr, "sin") || strings.Contains(resultStr, "cos") || strings.Contains(resultStr, "tan") {
 		levelInfo = checkHighestLevel(resultStr)
-		strA = subString(resultStr, 0, len(resultStr))
+		tmp1, _ := strconv.Atoi(levelInfo[1])
+		strA = subString(resultStr, 0, tmp1)
 		strB = calculateStr(levelInfo[0])
-		if i := strconv.Atoi(levelInfo[2]); i == len(resultStr)-1 {
+		if i, _ := strconv.Atoi(levelInfo[2]); i == len(resultStr)-1 {
 			strC = ""
 		} else {
-		    strC = subString(resultStr, strconv.Atoi(levelInfo[2])+1, len(resultStr))
+			tmp2, _ := strconv.Atoi(levelInfo[2])
+			strC = subString(resultStr, tmp2+1, len(resultStr))
 		}
 		resultStr = strA + strB + strC
+		fmt.Println(strings.Contains(resultStr, " "))
+		fmt.Println(strings.Contains(resultStr, "("))
+		fmt.Println(strings.Contains(resultStr, ")"))
+		fmt.Println(strings.Contains(resultStr, "+"))
+		fmt.Println(strings.Contains(resultStr, "-"))
+		fmt.Println(strings.Contains(resultStr, "*"))
+		fmt.Println(strings.Contains(resultStr, "/"))
+		fmt.Println(strings.Contains(resultStr, "sin"))
+		fmt.Println(strings.Contains(resultStr, "cos"))
+		fmt.Println(strings.Contains(resultStr, "tan"))
+		fmt.Println(resultStr)
+		fmt.Println(`************************************************** 플로트 스트링변환쪽에서 + 받고오기때문에 무한루프돌음`)
+
+		i++
+		if i > 20 {
+			break
+		}
 	}
 
 	result, _ := strconv.ParseFloat(resultStr, 64)
@@ -52,7 +71,7 @@ func calculateStr(inputStr string) string {
 	}
 
 	for i := 0; i < len(strArr); i++ {
-		if strArr[i] == "+" || strArr[i] == "_" {
+		if strArr[i] == "+" || strArr[i] == "-" {
 			arrTmp := []string{strArr[i-1], strArr[i], strArr[i+1]}
 			tmp := calculateAddition(arrTmp)
 			strArr = removeArr(strArr, i-1)
@@ -72,14 +91,12 @@ func calculateMultipl(strArr []string) string {
 		tmp2, _ := strconv.ParseFloat(strArr[2], 64)
 		result := tmp1 * tmp2
 
-		fmt.Println(result)
 		return strconv.FormatFloat(result, 'f', -1, 64)
 	} else if strArr[1] == "/" {
 		tmp1, _ := strconv.ParseFloat(strArr[0], 64)
 		tmp2, _ := strconv.ParseFloat(strArr[2], 64)
 		result := tmp1 / tmp2
 
-		fmt.Println(result)
 		return strconv.FormatFloat(result, 'f', -1, 64)
 	}
 	return ""
@@ -87,19 +104,17 @@ func calculateMultipl(strArr []string) string {
 
 func calculateAddition(strArr []string) string {
 	if strArr[1] == "+" {
-		tmp1, _ := strconv.ParseFloat(strArr[0], 64)
-		tmp2, _ := strconv.ParseFloat(strArr[2], 64)
+		tmp1, _ := strconv.ParseFloat(strArr[0], 32)
+		tmp2, _ := strconv.ParseFloat(strArr[2], 32)
 		result := tmp1 + tmp2
 
-		fmt.Println(result)
-		return strconv.FormatFloat(result, 'f', -1, 64)
+		return strconv.FormatFloat(result, 'f', -1, 32)
 	} else if strArr[1] == "-" {
-		tmp1, _ := strconv.ParseFloat(strArr[0], 64)
-		tmp2, _ := strconv.ParseFloat(strArr[2], 64)
+		tmp1, _ := strconv.ParseFloat(strArr[0], 32)
+		tmp2, _ := strconv.ParseFloat(strArr[2], 32)
 		result := tmp1 - tmp2
 
-		fmt.Println(result)
-		return strconv.FormatFloat(result, 'f', -1, 64)
+		return strconv.FormatFloat(result, 'f', -1, 32)
 	}
 	return ""
 }
@@ -162,6 +177,7 @@ func generateArr(inputStr string) []string {
 	return result
 }
 
+/*Utility */
 func removeArr(inputArr []string, idx int) []string {
 	var result []string
 	result = append(inputArr[:idx], inputArr[idx+1:]...)
@@ -176,16 +192,15 @@ func addArr(inputArr []string, str string) []string {
 
 func addArrIdx(inputArr []string, str string, idx int) []string {
 	var result []string
-	var inputArrTmp []string
 	var resultTmp []string
+	inputArrTmp := make([]string, len(inputArr))
 	copy(inputArrTmp, inputArr)
-
 	resultTmp = append(inputArrTmp[:idx], str)
 	result = append(resultTmp, inputArr[idx:]...)
 	return result
 }
 
 func subString(inputStr string, beginIdx int, endIdx int) string {
-    result := inputStr[beginIdx:endIdx]
-    return result
+	result := inputStr[beginIdx:endIdx]
+	return result
 }
