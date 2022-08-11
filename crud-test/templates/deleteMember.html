@@ -1,0 +1,21 @@
+<!--index.html-->
+
+<!--Embed the header.html template at this location-->
+{{ template "header.html" .}}
+
+<form action="/setmember" method="post">
+{{range.payload}}
+  <img src="{{.Img}}" onerror="this.src='https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927'" class="profileImg">
+<h2>{{.Nick}}</h2>
+<h3>{{.Name}} - {{.Team}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value={{.Id}} id="id" name="id"></h3>
+<hr>
+{{end}}
+  <input value="d" id="state" name="state" hidden>
+  <input type="submit" value="삭제">
+</form>
+<a href="/">
+  <h4>메인으로</h4>
+</a>
+
+<!--Embed the footer.html template at this location-->
+{{ template "footer.html" .}}

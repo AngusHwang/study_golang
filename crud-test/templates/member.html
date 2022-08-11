@@ -1,0 +1,12 @@
+{{ template "header.html" .}}
+
+<img src="{{.payload.Img}}" onerror="this.src='https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927'" class="profileImg">
+<h2>{{.payload.Nick}}</h2>
+<h3>{{.payload.Name}} - {{.payload.Team}}</h3>
+<hr>
+    {{.payload.Detail}}
+</hr>
+<a href="/">
+    <h4>메인으로</h4>
+</a>
+{{ template "footer.html" .}}

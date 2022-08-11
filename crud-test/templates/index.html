@@ -1,0 +1,16 @@
+<!--index.html-->
+
+<!--Embed the header.html template at this location-->
+{{ template "header.html" .}}
+
+{{range.payload}}
+    <img src="{{.Img}}" onerror="this.src='https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927'" class="profileImg">
+    <a href="/member/{{.Id}}">
+        <h2>{{.Nick}}</h2>
+    </a>
+    <h3>{{.Name}} - {{.Team}}</h3>
+    <hr>
+{{end}}
+
+<!--Embed the footer.html template at this location-->
+{{ template "footer.html" .}}

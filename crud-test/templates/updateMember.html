@@ -1,0 +1,15 @@
+{{ template "header.html" .}}
+<form action="/setmember" method="post">
+    <h3>이미지링크</h3><input type="text" id="img" name="img">
+    <h3>이름</h3><input value="{{.payload.Name}}" type="text" id="name" name="name">
+    <h3>별명</h3><input value="{{.payload.Nick}}" type="text" id="nick" name="nick">
+    <h3>팀</h3><input value="{{.payload.Team}}" type="text" id="team" name="team">
+    <h3>디테일</h3><input value="{{.payload.Detail}}" type="text" id="detail" name="detail">
+    <input hidden value="u" id="state" name="state">
+    <input hidden value="{{.payload.Id}}" id="id" name="id">
+    <input type="submit" value="수정">
+</form>
+<a href="/">
+    <h4>메인으로</h4>
+</a>
+{{ template "footer.html" .}}

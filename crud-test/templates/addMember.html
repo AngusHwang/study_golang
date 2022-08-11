@@ -1,0 +1,14 @@
+{{ template "header.html" .}}
+<form action="/setmember" method="post">
+    <h3>이미지링크</h3><input type="text" id="img" name="img">
+<h3>이름</h3><input type="text" id="name" name="name">
+<h3>별명</h3><input type="text" id="nick" name="nick">
+<h3>팀</h3><input type="text" id="team" name="team">
+<h3>디테일</h3><input type="text" id="detail" name="detail">
+    <input hidden value="a" id="state" name="state">
+<input type="submit" value="추가">
+</form>
+<a href="/">
+    <h4>메인으로</h4>
+</a>
+{{ template "footer.html" .}}
