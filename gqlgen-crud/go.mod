@@ -3,13 +3,14 @@ module gqlgen-crud
 go 1.19
 
 require (
+	entgo.io/ent v0.11.2
 	github.com/99designs/gqlgen v0.17.13
+	github.com/lib/pq v1.10.5
 	github.com/vektah/gqlparser/v2 v2.4.6
 )
 
 require (
 	ariga.io/atlas v0.5.1-0.20220717122844-8593d7eb1a8e // indirect
-	entgo.io/ent v0.11.2 // indirect
 	github.com/agext/levenshtein v1.2.1 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
