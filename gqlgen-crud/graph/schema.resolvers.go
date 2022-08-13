@@ -6,7 +6,6 @@ package graph
 import (
 	"context"
 	"fmt"
-	"gqlgen-crud/ent"
 	"gqlgen-crud/graph/generated"
 	"gqlgen-crud/graph/model"
 	"math/rand"
@@ -33,9 +32,6 @@ func (r *mutationResolver) CreateMember(ctx context.Context, input model.NewMemb
 		Img:    input.Img,
 	}
 	r.members = append(r.members, member)
-	cl := ent.ConnectDB()
-	defer cl.Close()
-	ent.CreateMember(ctx, cl, ent.Member{ID: 0, Name: member.Name, Nick: member.Nick, Team: member.Team, Detail: member.Detail, Img: member.Img})
 	return member, nil
 }
 
@@ -46,8 +42,6 @@ func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 
 // Members is the resolver for the members field.
 func (r *queryResolver) Members(ctx context.Context) ([]*model.Member, error) {
-	cl := ent.ConnectDB()
-	defer cl.Close()
 	return r.members, nil
 }
 
