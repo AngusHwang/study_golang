@@ -1,0 +1,16 @@
+input ArtistInput {
+    id: Int
+    name: String!
+    externalUrl: String!
+    phoneNumber: String!
+    discord: String
+    recommender: String
+}
+
+#extend type Query {
+##    artists(first: Int!, after: ID): ArtistsConnection
+#}
+
+extend type Mutation {
+    applyArtist(data: ArtistInput!): Artist
+}

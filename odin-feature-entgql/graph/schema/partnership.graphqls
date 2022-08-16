@@ -1,0 +1,15 @@
+input PartnershipInput {
+    id: Int
+    name: String!
+    company: String!
+    email: String!
+    content: String
+}
+
+extend type Query {
+    partnerships: Partnership
+}
+
+extend type Mutation {
+    askForPartnership(data: PartnershipInput!): Partnership
+}

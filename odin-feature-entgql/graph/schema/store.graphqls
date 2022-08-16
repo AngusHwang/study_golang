@@ -1,0 +1,18 @@
+input StoreInput {
+  id: Int
+  name: String!
+  food: [String!]!
+  location: String!
+  onFoot: Int
+}
+
+extend type Query {
+  store(id: Int!): Store @Authorized
+  stores: [Store!]! @Authorized
+}
+
+extend type Mutation {
+  createStore(data: StoreInput!): Store @Authorized
+  updateStore(data: StoreInput!): Store @Authorized
+  deleteStore(id: Int!): Store @Authorized
+}

@@ -30,7 +30,7 @@ func QueryAllId(ctx context.Context, client *Client) []int {
 	return iArr
 }
 
-func CreateMember(ctx context.Context, client *Client, nm Member) (*Member, error) {
+func (*MemberClient) CreateMember(ctx context.Context, client *Client, nm Member) (*Member, error) {
 	iArr := QueryAllId(ctx, client)
 	id := 0
 	for i := 0; i < len(iArr); i++ {

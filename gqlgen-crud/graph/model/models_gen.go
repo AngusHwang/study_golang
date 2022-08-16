@@ -2,23 +2,6 @@
 
 package model
 
-type Member struct {
-	ID     string `json:"id"`
-	Name   string `json:"name"`
-	Nick   string `json:"nick"`
-	Team   string `json:"team"`
-	Detail string `json:"detail"`
-	Img    string `json:"img"`
-}
-
-type NewMember struct {
-	Name   string `json:"name"`
-	Nick   string `json:"nick"`
-	Team   string `json:"team"`
-	Detail string `json:"detail"`
-	Img    string `json:"img"`
-}
-
 type NewTodo struct {
 	Text   string `json:"text"`
 	UserID string `json:"userId"`

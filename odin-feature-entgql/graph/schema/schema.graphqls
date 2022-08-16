@@ -1,0 +1,5 @@
+directive @Authorized on FIELD_DEFINITION
+
+scalar Time
+
+type Mutation

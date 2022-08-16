@@ -16,7 +16,7 @@ resolver:
   filename_template: "resolver_{name}.go"
 
 autobind:
-  - gqlgen-crud/ent
+  - odin/ent
 
 models:
   ID:

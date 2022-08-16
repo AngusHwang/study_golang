@@ -1,0 +1,106 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: odin-api
+  namespace: odin
+  annotations:
+    kubernetes.io/ingress.class: "we-ar-kr"
+spec:
+  rules:
+    - host: odin.we-ar.kr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: odin-api
+                port:
+                  number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: odin-api
+  namespace: odin
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 3000
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 3000
+  selector:
+    app: odin-api
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: odin-api
+  namespace: odin
+spec:
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+    - resource:
+        name: cpu
+        targetAverageUtilization: 70
+      type: Resource
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: odin-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odin-api
+  namespace: odin
+  labels:
+    app: odin-api
+spec:
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: odin-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 10
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: odin-api
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: odin-api
+          image: 790152711045.dkr.ecr.ap-northeast-2.amazonaws.com/odin-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: 200m
+              memory: 200Mi
+  #          readinessProbe:
+  #            httpGet:
+  #              path: "/"
+  #              port: 3000
+  #            initialDelaySeconds: 60
+  #            periodSeconds: 30
+  #          livenessProbe:
+  #            httpGet:
+  #              path: "/"
+  #              port: 3000
+  #            initialDelaySeconds: 60
+  #            periodSeconds: 30
+          envFrom:
+            - secretRef:
+                name: odin-api

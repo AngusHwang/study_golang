@@ -1,0 +1,13 @@
+input UserInput {
+    username: String!
+    password: String!
+}
+
+extend type Query {
+    authPing: String! @Authorized
+}
+
+extend type Mutation {
+    login(data: UserInput!): String!
+    register(data: UserInput!): String! @Authorized
+}
