@@ -1,6 +1,8 @@
 package graph
 
-import "gqlgen-crud/graph/model"
+import (
+	"gqlgen-crud/graph/model"
+)
 
 // This file will not be regenerated automatically.
 //
